@@ -36,6 +36,10 @@ body {
   background-color: rgb(148, 255, 150);
 }
 
+.btn-selection:hover {
+  cursor: pointer;
+}
+
 .score {
   margin-top: 20px;
   display: flex;

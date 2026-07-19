@@ -6,7 +6,6 @@ function App() {
   const [answer, setAnswer] = useState("");
   const [score, setScore] = useState(0);
   const [lives, setLives] = useState(3);
-  const [isGameOver, setIsGameOver] = useState(false);
 
   const fetchNewQuestion = async () => {
     try {
@@ -25,9 +24,6 @@ function App() {
   const handleGuess = (clickedId) => {
     if (answer === true) return;
 
-    if (lives === 0) {
-      setIsGameOver(true);
-    }
     if (clickedId === quizData.correctId) {
       setAnswer(true);
       incrementScore();
@@ -50,6 +46,12 @@ function App() {
     }
   };
 
+  const handleRetry = () => {
+    fetchNewQuestion();
+    setScore(0);
+    setLives(3);
+  };
+
   const incrementScore = () => {
     const newScore = score + 1;
     setScore(newScore);
@@ -60,6 +62,8 @@ function App() {
   };
 
   console.log("Current Quiz Data:", quizData);
+
+  const isGameOver = lives <= 0;
 
   if (!quizData) {
     return (
@@ -74,6 +78,9 @@ function App() {
       <div className="container">
         <h1>Game Over!</h1>
         <p>Final Score: {score}</p>
+        <button className="result-text" onClick={handleRetry}>
+          Try Again
+        </button>
       </div>
     );
   }
