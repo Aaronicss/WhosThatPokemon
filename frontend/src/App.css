@@ -36,6 +36,10 @@ body {
   background-color: rgb(148, 255, 150);
 }
 
+.btn-selection:hover {
+  cursor: pointer;
+}
+
 .score {
   margin-top: 20px;
   display: flex;
@@ -69,4 +73,5 @@ body {
   font-size: 1.2rem;
   font-weight: bold;
   color: #333333;
+  margin: 10px;
 }

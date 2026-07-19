@@ -1,4 +1,3 @@
-import pika from "./assets/pika.png";
 import { useState, useEffect } from "react";
 import "./App.css";
 
@@ -6,6 +5,7 @@ function App() {
   const [quizData, setQuizData] = useState(null);
   const [answer, setAnswer] = useState("");
   const [score, setScore] = useState(0);
+  const [lives, setLives] = useState(3);
 
   const fetchNewQuestion = async () => {
     try {
@@ -23,15 +23,17 @@ function App() {
 
   const handleGuess = (clickedId) => {
     if (answer === true) return;
+
     if (clickedId === quizData.correctId) {
       setAnswer(true);
       incrementScore();
       setTimeout(() => {
-        setAnswer(""); // FIX: Resets text back to blank for the next question
+        setAnswer("");
         fetchNewQuestion();
       }, 1200);
     } else {
       setAnswer(false);
+      decrementLives(lives);
     }
   };
 
@@ -44,17 +46,41 @@ function App() {
     }
   };
 
+  const handleRetry = () => {
+    fetchNewQuestion();
+    setScore(0);
+    setLives(3);
+  };
+
   const incrementScore = () => {
     const newScore = score + 1;
     setScore(newScore);
   };
 
+  const decrementLives = () => {
+    setLives((prevLives) => prevLives - 1);
+  };
+
   console.log("Current Quiz Data:", quizData);
+
+  const isGameOver = lives <= 0;
 
   if (!quizData) {
     return (
       <div className="container">
         <h1>Loading pokemon...</h1>
+      </div>
+    );
+  }
+
+  if (isGameOver) {
+    return (
+      <div className="container">
+        <h1>Game Over!</h1>
+        <p>Final Score: {score}</p>
+        <button className="result-text" onClick={handleRetry}>
+          Try Again
+        </button>
       </div>
     );
   }
@@ -78,8 +104,10 @@ function App() {
 
       <div className="score">
         <div className="show-result">{handleResult()}</div>
-
-        <span className="score-text">Score: {score}</span>
+        <div className="game-data">
+          <span className="score-text">Score: {score}</span>
+          <span className="score-text">Lives: {lives}</span>
+        </div>
       </div>
     </div>
   );
