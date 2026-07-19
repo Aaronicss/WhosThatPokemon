@@ -21,20 +21,15 @@ function App() {
     fetchNewQuestion();
   }, []);
 
-  const correctAns = () => {
-    setAnswer(true);
-    incrementScore();
-  };
-
-  const wrongAns = () => {
-    setAnswer(false);
-    handleResult();
-  };
-
   const handleGuess = (clickedId) => {
+    if (answer === true) return;
     if (clickedId === quizData.correctId) {
       setAnswer(true);
       incrementScore();
+      setTimeout(() => {
+        setAnswer(""); // FIX: Resets text back to blank for the next question
+        fetchNewQuestion();
+      }, 1200);
     } else {
       setAnswer(false);
     }
@@ -74,6 +69,7 @@ function App() {
             key={options.id}
             className="btn-selection"
             onClick={() => handleGuess(options.id)}
+            disabled={answer === true}
           >
             {options.name}
           </button>
@@ -82,6 +78,7 @@ function App() {
 
       <div className="score">
         <div className="show-result">{handleResult()}</div>
+
         <span className="score-text">Score: {score}</span>
       </div>
     </div>
