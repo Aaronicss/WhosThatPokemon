@@ -3,7 +3,7 @@ const cors = require("cors");
 const port = process.env.PORT || 3000;
 
 const app = express();
-app.use(cors({ origin: "https://whos-that-pokemon-murex.vercel.app/" }));
+app.use(cors({ origin: "https://whos-that-pokemon-murex.vercel.app" }));
 
 /* Generate 4 random integers and create an array */
 app.get("/api/quiz", async (req, res) => {
