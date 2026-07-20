@@ -50,6 +50,7 @@ function App() {
     fetchNewQuestion();
     setScore(0);
     setLives(3);
+    setAnswer("");
   };
 
   const incrementScore = () => {
@@ -59,6 +60,11 @@ function App() {
 
   const decrementLives = () => {
     setLives((prevLives) => prevLives - 1);
+  };
+
+  const handleLives = () => {
+    const hearts = "❤️".repeat(lives);
+    return hearts;
   };
 
   console.log("Current Quiz Data:", quizData);
@@ -106,7 +112,7 @@ function App() {
         <div className="show-result">{handleResult()}</div>
         <div className="game-data">
           <span className="score-text">Score: {score}</span>
-          <span className="score-text">Lives: {lives}</span>
+          <span className="score-text">Lives: {handleLives()}</span>
         </div>
       </div>
     </div>
